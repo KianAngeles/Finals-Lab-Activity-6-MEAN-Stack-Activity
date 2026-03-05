@@ -20,9 +20,13 @@
     <!-- LEFT: Form Panel -->
     <aside class="panel">
       <div class="panel-head">
-        <h2 class="panel-title">{{ editingId ? "Edit Book" : "Add New Book" }}</h2>
+        <h2 class="panel-title">{{ editingId ? 'Edit Book' : 'Add New Book' }}</h2>
         <p class="panel-hint">
-          {{ editingId ? "Update the details then save changes." : "Fill in the details to add a new book." }}
+          {{
+            editingId
+              ? 'Update the details then save changes.'
+              : 'Fill in the details to add a new book.'
+          }}
         </p>
       </div>
 
@@ -35,6 +39,16 @@
         <label class="field">
           <span class="label">Description</span>
           <input id="newDesc" placeholder="e.g., Software craftsmanship" />
+        </label>
+
+        <label class="field">
+          <span class="label">Author</span>
+          <input id="newAuthor" placeholder="e.g., Robert C. Martin" />
+        </label>
+
+        <label class="field">
+          <span class="label">Category</span>
+          <input id="newCategory" placeholder="e.g., Programming, Fantasy" />
         </label>
 
         <label class="field">
@@ -67,7 +81,20 @@
           <article class="card">
             <div class="card-main">
               <h3 class="card-title">{{ book.title }}</h3>
+
               <p class="card-desc">{{ book.desc }}</p>
+
+              <!-- NEW FIELDS DISPLAY -->
+              <div class="meta">
+                <div class="meta-row">
+                  <span class="meta-label">Author</span>
+                  <span class="meta-value">{{ book.author }}</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-label">Category</span>
+                  <span class="meta-value">{{ book.category }}</span>
+                </div>
+              </div>
             </div>
 
             <div class="card-foot">
