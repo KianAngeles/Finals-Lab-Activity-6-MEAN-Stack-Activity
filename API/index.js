@@ -9,7 +9,7 @@ const multer = require("multer");
 const app = express();
 app.use(cors());
 
-const CONNECTION_STRING ="mongodb://localhost:27017";
+const CONNECTION_STRING = "mongodb://localhost:27017";
 
 const DATABASENAME = "MyDb";
 let database;
@@ -70,7 +70,9 @@ app.post("/api/books/AddBook", multer().none(), async (req, res) => {
     await database.collection("Books").insertOne({
       id: String(numOfDocs + 1),
       title: req.body.title,
-      desc: req.body.description,         
+      desc: req.body.description,
+      author: req.body.author,
+      category: req.body.category,
       price: Number(req.body.price) || 0,
     });
 
@@ -84,7 +86,7 @@ app.post("/api/books/AddBook", multer().none(), async (req, res) => {
 // Update book
 app.put("/api/books/UpdateBook", multer().none(), async (req, res) => {
   try {
-    const { id, title, description, price } = req.body;
+    const { id, title, description, author, category, price } = req.body;
 
     if (!id) return res.status(400).json({ error: "Missing id" });
 
@@ -94,14 +96,12 @@ app.put("/api/books/UpdateBook", multer().none(), async (req, res) => {
         $set: {
           title: title ?? "",
           desc: description ?? "",
+          author: author ?? "",
+          category: category ?? "",
           price: Number(price) || 0,
         },
       }
     );
-
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ error: "Book not found" });
-    }
 
     res.json("Updated successfully!");
   } catch (error) {
