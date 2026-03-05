@@ -290,3 +290,30 @@ input:focus{
   color: var(--text);
 }
 .empty p{ margin:0; }
+
+/* extra details inside the card */
+.meta{
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  display: grid;
+  gap: 8px;
+}
+
+.meta-row{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap: 10px;
+}
+
+.meta-label{
+  color: #444;   /* dark gray */
+  font-size: 12.5px;
+}
+
+.meta-value{
+  color: #000;   /* black */
+  font-size: 13px;
+  font-weight: 650;
+}
