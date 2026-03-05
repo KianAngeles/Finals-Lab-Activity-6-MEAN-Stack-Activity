@@ -1,0 +1,93 @@
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1 class="title">Books Application</h1>
+        <p class="subtitle">Manage your collection with add, edit, and delete.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Total Books</div>
+        <div class="stat-value">{{ books?.length ?? 0 }}</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- LEFT: Form Panel -->
+    <aside class="panel">
+      <div class="panel-head">
+        <h2 class="panel-title">{{ editingId ? "Edit Book" : "Add New Book" }}</h2>
+        <p class="panel-hint">
+          {{ editingId ? "Update the details then save changes." : "Fill in the details to add a new book." }}
+        </p>
+      </div>
+
+      <div class="form">
+        <label class="field">
+          <span class="label">Title</span>
+          <input id="newBook" placeholder="e.g., Clean Code" />
+        </label>
+
+        <label class="field">
+          <span class="label">Description</span>
+          <input id="newDesc" placeholder="e.g., Software craftsmanship" />
+        </label>
+
+        <label class="field">
+          <span class="label">Price</span>
+          <input id="newPrice" placeholder="e.g., 499" />
+        </label>
+
+        @if (!editingId) {
+          <button class="btn primary" (click)="addBook()">Add Book</button>
+        }
+
+        @if (editingId) {
+          <div class="row">
+            <button class="btn primary" (click)="updateBook()">Update</button>
+            <button class="btn subtle" (click)="cancelEdit()">Cancel</button>
+          </div>
+        }
+      </div>
+    </aside>
+
+    <!-- RIGHT: List Panel -->
+    <section class="content">
+      <div class="content-head">
+        <h2 class="content-title">Library</h2>
+        <div class="content-meta">Showing {{ books?.length ?? 0 }} items</div>
+      </div>
+
+      <div class="grid">
+        @for (book of books; track book.id) {
+          <article class="card">
+            <div class="card-main">
+              <h3 class="card-title">{{ book.title }}</h3>
+              <p class="card-desc">{{ book.desc }}</p>
+            </div>
+
+            <div class="card-foot">
+              <div class="price">₱ {{ book.price }}</div>
+
+              <div class="actions">
+                <button class="btn small" (click)="editBook(book)">Edit</button>
+                <button class="btn small danger" (click)="deleteBook(book.id)">Delete</button>
+              </div>
+            </div>
+          </article>
+        } @empty {
+          <div class="empty">
+            <h3>No books available</h3>
+            <p>Add your first book from the form on the left.</p>
+          </div>
+        }
+      </div>
+    </section>
+  </main>
+</div>
+
+<router-outlet />
